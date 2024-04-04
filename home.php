@@ -8,7 +8,7 @@ if (!isset($_SESSION['user'])) {
 require_once __DIR__ . '/inc/header.php';
 ?>
     <section>
-        <form action="insertData.php" method="post" enctype="multipart/form-data">
+        <form action="operations/insertData.php" method="post" enctype="multipart/form-data">
             <div>
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title">
@@ -42,7 +42,7 @@ require_once __DIR__ . '/inc/header.php';
             </tr>
             </thead>
             <tbody>
-            <?php require_once 'selectData.php'; ?>
+            <?php require_once __DIR__ . '/operations/selectData.php'; ?>
             </tbody>
         </table>
     </section>
