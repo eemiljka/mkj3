@@ -277,4 +277,4 @@ fabric.properties
 
 
 config/config.php
-
+uploads/*

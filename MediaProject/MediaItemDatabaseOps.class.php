@@ -2,6 +2,8 @@
 
 namespace MediaProject;
 
+require_once 'MediaItem.class.php';
+
 class MediaItemDatabaseOps {
     private \PDO $DBH;
 
@@ -9,7 +11,7 @@ class MediaItemDatabaseOps {
         $this->DBH = $DBH;
     }
 
-    public function getMediaItems() {
+    public function getMediaItems(): array {
         $sql = 'SELECT * FROM MediaItems;';
         $STH = $this->DBH->query($sql);
         $STH->setFetchMode(\PDO::FETCH_ASSOC);
@@ -18,5 +20,18 @@ class MediaItemDatabaseOps {
             $mediaItems[] = new MediaItem($row);
         }
         return $mediaItems;
+    }
+
+    public function insertMediaItem($data): bool {
+        $sql = 'INSERT INTO MediaItems (user_id, filename, filesize, media_type, title, description) 
+                VALUES (:user_id, :filename, :filesize, :media_type, :title, :description)';
+        try {
+            $STH = $this->DBH->prepare($sql);
+            $STH->execute($data);
+            return true;
+        } catch (\PDOException $e) {
+            file_put_contents('PDOErrors.txt', 'MediaItemDatabaseOps.class.php - ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
+            return false;
+        }
     }
 }

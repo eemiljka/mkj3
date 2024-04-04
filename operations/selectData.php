@@ -8,12 +8,13 @@ if (!isset($_SESSION['user'])) {
 global $DBH;
 require_once __DIR__ . '/../db/dbConnect.php';
 
-$sql = 'SELECT * FROM MediaItems;';
+require_once __DIR__ . '/../MediaProject/MediaItemDatabaseOps.class.php';
 
-try {
-    $STH = $DBH->query($sql);
-    $STH->setFetchMode(PDO::FETCH_ASSOC);
-    while ($row = $STH->fetch()) {
+$mediaItemDatabaseOps = new MediaProject\MediaItemDatabaseOps($DBH);
+$mediaItems = $mediaItemDatabaseOps->getMediaItems();
+
+foreach($mediaItems as $mediaItem) {
+    $row = $mediaItem->getMediaItem();
         echo '<tr>';
         echo '<td>' . $row['media_id'] . '</td>';
         echo '<td>' . $row['user_id'] . '</td>';
@@ -32,8 +33,4 @@ try {
             echo '<td>Not urs.</td>';
         }
         echo '</tr>';
-    }
-} catch (PDOException $e) {
-    echo "Could not select data from the database.";
-    file_put_contents('PDOErrors.txt', 'selectData.php - ' . $e->getMessage(), FILE_APPEND);
 }
