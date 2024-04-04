@@ -1,8 +1,9 @@
 <?php
+// dbConnect.php
 
 global $host, $dbname, $username, $password, $port;
 
-require 'dbconfig.php';
+require_once __DIR__ . '/../config/config.php';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8;port=$port";
 

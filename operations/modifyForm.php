@@ -1,6 +1,6 @@
 <?php
 global $DBH;
-require_once 'dbConnect.php';
+require_once __DIR__ . '/../db/dbConnect.php';
 
 if (isset($_GET['id'])) {
     $sql = 'SELECT * FROM MediaItems WHERE media_id = :media_id';
