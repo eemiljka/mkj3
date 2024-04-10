@@ -1,4 +1,4 @@
 <?php
 // xss.php
-echo $_GET['someparam'];
+echo strip_tags($_GET['someparam']);
 ?>
